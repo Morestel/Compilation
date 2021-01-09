@@ -38,3 +38,14 @@ arbre concat_pere_fils(arbre pPere, arbre pFils){
     pPere->frere = pFils;
     return pPere;
 }
+
+void free_arbre(arbre a){
+    if (a == NULL){
+        return;
+    }
+    else{
+        free(a->frere);
+        free(a->fils);
+        free(a);
+    }
+}

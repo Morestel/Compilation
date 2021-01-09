@@ -34,7 +34,11 @@ void ajoutRegion(int newTaille, int newNis, arbre newArbre){
     table_reg[nombre].arbre_r = newArbre;
 }
 
-void affiche(){ // Par soucis de place on n'affiche pas les arbres
+void ajout_arbre_region(int i, arbre newArbre){
+    table_reg[i].arbre_r = newArbre;
+}
+
+void affiche_region(){ // Par soucis de place on n'affiche pas les arbres
     int i;
     int nombre = nombre_region();
     printf("\n-----Table des régions-----\n");
@@ -44,10 +48,7 @@ void affiche(){ // Par soucis de place on n'affiche pas les arbres
 
 }
 
-// Renvoie le numéro de la région actuelle : Pour la table des déclarations
-int numeroRegion(){
-    return taille_pile(pile_region) - 1;
-}
+
 /*
 int main(){
     init_region();

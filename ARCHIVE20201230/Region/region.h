@@ -28,6 +28,8 @@ void init_region();
 int nombre_region();
 // Ajout d'une région dans le tableau
 void ajoutRegion(int newTaille, int newNis, arbre newArbre);
-// Donne le numéro de la région
-int numeroRegion();
+// Insertion juste d'un arbre à l'indice i
+void ajout_arbre_region(int i, arbre newArbre);
+// Affiche la table des regions
+void affiche_region();
 #endif

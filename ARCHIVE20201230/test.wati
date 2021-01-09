@@ -14,16 +14,18 @@ wati_programme
                   Test plus poussé
 */
 
-// Test déclaration 
+// Test déclaration     
 let x : int;
+let z : char;
 let w : string[5];
 let k : couleur;
+let w : couleur;
 let a : animal;
 let b[i] : fleur;
 typedef struct couleur{
 noir: int ; 
 rouge : int ;
-bleu : char 
+bleu : char
 };
 
 // Test définition tableau / Structure

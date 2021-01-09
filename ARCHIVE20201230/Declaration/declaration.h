@@ -39,24 +39,18 @@ typedef struct{
 /* Fonctions */
 // Initialise la table des déclarations 
 void init_declaration();
-// Calcul la taille du champs execution
-int remplir_exec(int numero, int nature);
-// Rempli l'execution dans le cas où nature = 1 ou 2
-int tailleExecution(int numero);
+
 // Renvoie le champ execution à l'indice x
 int taille(int x);
-// Calcul le déplacement à l'execution depuis numero
-int deplacement_execution(int numero);
-// Calcul la taille du champs description
-int remplir_description(int numero, int nature);
-// Calcul la taille du champs region
-int remplir_region(int numero, int nature);
-// Ajout d'une déclaration dans la tab
-void ajoutDeclaration(int newNature, int newRegion, int newDescription, int newExecution, int n);
-// Ajout d'un débordement
-void ajoutDebordement(int newNature, int newRegion, int newDescription, int newExecution);
-// Ajout dans la table des déclarations quand on a que le numéro et la nature
-void remplir_declaration(int numero, int pNature);
+// Fonctions d'insertions dans la table des déclarations, leur nom indique ce qu'on insère
+int declaration_structure(int numero, int type, int numero_region, int indice_representation);
+int declaration_tableau(int numero, int type, int nombre_dimensions, int numero_region, int indice_representation);
+int declaration_variable(int numero, int type, int deplacement, int numero_region);
+int declaration_parametre(int numero, int type, int deplacement, int numero_region);
+int declaration_procedure(int numero, int type, int numero_region, int indice_representation);
+int declaration_fonction(int numero, int type, int numero_region, int indice_representation);
+
+int gerer_debordement(int numero);
 // Affichage table déclaration
 void afficheDeclaration();
 #endif

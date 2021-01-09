@@ -1,0 +1,25 @@
+wati_programme
+
+let x : int;
+let w : string[5];
+
+{
+    // Test affectation
+    x = 3;
+    
+    france  = macron;
+    fr1425kla_o8 = 12 * 4 / 2 - pm451;
+    y += 4;
+    y -= 4;
+    w++;
+    w--;
+    z = truc();
+    z = truc(machin);
+    bam[2] = 4;
+    xin = shin.zhao;
+    rin = shangai.ville[9];
+    Qin = shangai.ville[f];
+    /* Inventaire de ce qui ne marche pas 
+    42opk = 45;
+    ozei + mp = 12; 
+}

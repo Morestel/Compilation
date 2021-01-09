@@ -3,6 +3,7 @@
 #include <string.h>
 #include "Lexico/lexico.h"
 int num_ligne = 1;
+int nb_commentaire = 0;
 int *p_num_ligne = &num_ligne;
 void compte_lignes_commentaire(int *num_l);
 %}
@@ -53,7 +54,7 @@ switch {return(SWITCH);}
 case {return(CASE);}
 default {return(DEFAULT);}
 
-0|[1-9][0-9]* {yylval.entier = inserer_lexicographique(yytext); return(CST_ENTIERE);}
+0|[1-9][0-9]* {return(CST_ENTIERE);}
 0|[1-9][0-9]*\.[0-9]+ {return(CST_REEL);}
 \'[a-zA-Z]\' {return(CST_CARACTERE);}
 \"[^\"\n]+\" {return(CST_CHAINE);}
@@ -79,11 +80,11 @@ procedure {return(PROCEDURE);}
 scan {return(LIRE);}
 print {return(ECRIRE);}
 
-\/\*([^*]|\*+[^*/])*\*+\/ {compte_lignes_commentaire(p_num_ligne);}	/* Commentaire multilignes */
-\/\/.* {;}	/* Commentaire sur une seule ligne */
+\/\*([^*]|\*+[^*/])*\*+\/ {compte_lignes_commentaire(p_num_ligne); ++nb_commentaire;}	/* Commentaire multilignes */
+\/\/.* {++nb_commentaire;}	/* Commentaire sur une seule ligne */
 [\n] {++num_ligne;}
 [ \t] {;} 
-[a-zA-Z][a-zA-Z0-9_]* {yylval.entier = inserer_lexicographique(yytext); return(IDF);}
+[a-zA-Z][a-zA-Z0-9_]* {inserer_lexicographique(yytext); yylval.entier = association_nom(yytext); return(IDF);}
 
 %%
 void compte_lignes_commentaire(int * num_l){
