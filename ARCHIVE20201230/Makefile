@@ -1,6 +1,6 @@
 YACC = yacc
 LEX = lex
-CC = gcc
+CC = gcc -g
 CC2 = y.tab.c lex.yy.o 
 LDFLAGS = -ly -lfl
 OPTIONS = -Wall

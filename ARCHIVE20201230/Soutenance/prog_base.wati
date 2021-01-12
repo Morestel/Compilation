@@ -1,0 +1,6 @@
+wati_programme
+
+let x : int;
+{
+  x = 3;  
+}

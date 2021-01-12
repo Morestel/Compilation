@@ -1,0 +1,11 @@
+wati_programme
+
+let x : int;
+let aa : char;
+let bb : bool;
+let cc : int;
+let voiture: char;
+
+{
+  z = 3;  
+}

@@ -41,22 +41,21 @@ typedef struct mineral tab[4]
 fct france(int x, float y) return int{
     x++;
     return retourner;
-};
-
+}
 fct kid() return int{
     x++;
     return retourner;
-};
+}
 
 // Test de procedure
 procedure woman(char x, bool y){
     y++;
-};
+}
 
 procedure dog(char x){
     y++;
    
-};
+}
 
 // Test appel et retourne
 fct CallMeAndReturn() return int{
@@ -76,7 +75,7 @@ fct CallMeAndReturn() return int{
     return int;
     return return;
     */
-};
+}
 {
     // Test affectation
     x = 3;

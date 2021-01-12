@@ -23,9 +23,11 @@ void creer_representation();
 // Fonctions d'insertion dans la table de représentation
 
 int inserer_structure_table_representation(int nb_champs);
+int update_structure_rep(int nb_champs);
 int insertion_champ_table_rep(int num_lexico, int type, int deplacement);
 
-int inserer_tableau_table_representation(int index, int nombre_dimension);
+int inserer_tableau_table_representation(int type, int nombre_dimension);
+int laisser_espace_tab(int espace);
 int inserer_dimensions_table_representation(int borne_inf, int borne_sup);
 
 int inserer_fonction_procedure_rep(int type_res, int nb_param);

@@ -65,6 +65,10 @@ int inserer_lexicographique(char *elem){ // Insertion de l'élément dans la tab
 
         default: // Présence d'un élément avec le même hashcode
             // On va chercher lequel n'a pas de suivant
+            
+            if (strcmp(table_lex[premier].contenu, elem) == 0){ // Si l'élément est déjà dedans
+                    return 0;
+            }
             while(table_lex[premier].suivant != -1){
                 if (strcmp(table_lex[premier].contenu, elem) == 0){ // Si l'élément est déjà dedans
                     return 0;

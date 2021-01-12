@@ -2,8 +2,6 @@
 
 // Table de représentation 
 int representation[TAILLE_REPRESENTATION];
-// Table de représentation auxilliaire (Stocke les indices où sont les numéros lexicographiques)
-int representation_aux[TAILLE_REPRESENTATION];
 // Son nombre d'éléments dedans
 int rep = 0;
 // Importation de la table lexicographique
@@ -19,14 +17,27 @@ void creer_representation(){
         representation[i] = -1;
 }
 
-int inserer_tableau_table_representation(int index, int nombre_dimension){
-    int i;
+int inserer_tableau_table_representation(int type, int nombre_dimension){
+    int i = 0;
     while (i < TAILLE_REPRESENTATION - 2){
-        if (representation[i] == -1){
-            representation_aux[rep] = i;
-            rep++;
-            representation[i] = index;
+        if (representation[i] == -2){ // -2 correspond à l'endroit où on a laissé de l'espace
+            representation[i] = type;
             representation[++i] = nombre_dimension;
+            return 1; // Insertion réussie
+        }
+        i++;
+    }
+    return 0; // Insertion échouée
+}
+
+int laisser_espace_tab(int espace){
+    int i = 0;
+    int j;
+    while (i < TAILLE_REPRESENTATION - espace){
+        if (representation[i] == -1){
+            for (j = i; j < i+espace; j++){
+                representation[j] = -2;
+            }
             return 1; // Insertion réussie
         }
         i++;
@@ -46,28 +57,26 @@ int inserer_dimensions_table_representation(int borne_inf, int borne_sup){
     }
     return 0; // Insertion échouée
 }
-int inserer_table_representation(int index, int nombre_dimension, int borne_inf, int borne_sup){
-    int i = 0;
-    while (i < TAILLE_REPRESENTATION - 4){ // Tant que on a de la place (Si il reste moins de 4 places alors on ne pourra pas tout insérer)
-        if (representation[i] == -1){ // Si espace vide, on insère
-            representation_aux[rep] = i;
-            rep++;
-
-            representation[i] = index;
-            representation[i+1] = nombre_dimension;
-            representation[i+2] = borne_inf;
-            representation[i+3] = borne_sup;
-            return 1; // L'insertion s'est bien déroulée on retourne 1
-        }
-    }
-    return 0; // Normalement pas atteint si l'insertion a pu se dérouler
-}
 
 int inserer_structure_table_representation(int nb_champs){
     int i = 0;
     while (i < TAILLE_REPRESENTATION){ // On cherche à insérer le nombre de champs
         if (representation[i] == -1){
             representation[i] = nb_champs;
+            return 1; // Insertion réussie
+        }
+        i++;
+    }
+    return 0; // Insertion ratée
+}
+
+// Le nombre de champs a été mis à 0 à la base, on retourne lui donner le bon nombre de champs
+int update_structure_rep(int nb_champs){
+    int i = 0;
+    int a_update = nb_champs * 3 + 1;
+    while (i < TAILLE_REPRESENTATION){ // On cherche le dernier élément inséré
+        if (representation[i] == -1){ // On l'a trouvé
+            representation[i-a_update] = nb_champs; // On met à jour
             return 1; // Insertion réussie
         }
         i++;
@@ -91,33 +100,34 @@ int insertion_champ_table_rep(int num_lexico, int type, int deplacement){
 
 
 int inserer_fonction_procedure_rep(int type_res, int nb_param){
-    int i;
+    int i = 0;
     if (type_res == -1){
         while (i < TAILLE_REPRESENTATION){ // Pour faire rentrer chaque champs
-        if (representation[i] == -1){
+        if (representation[i] == -2){
             representation[i] = nb_param;
-            representation_aux[rep] = i;
-            rep++;
+            printf("Insertion de %d\n", nb_param);
             return 1; // Insertion réussie
         }
         i++;
         }
     }
-    while (i < TAILLE_REPRESENTATION - 2){ // Pour faire rentrer chaque champs
-        if (representation[i] == -1){
-            representation_aux[rep] = i;
-            rep++;
-            representation[i] = type_res;
-            representation[++i] = nb_param;
-            return 1; // Insertion réussie
+    else{
+        while (i < TAILLE_REPRESENTATION - 2){ // Pour faire rentrer chaque champs
+            if (representation[i] == -2){
+                representation[i] = type_res;
+                representation[++i] = nb_param;
+                printf("Insertion de %d et %d\n", type_res, nb_param);
+                return 1; // Insertion réussie
+            }
+            i++;
         }
-        i++;
     }
     return 0; // Insertion impossible
 }
 int inserer_param_fct_proc_rep(int num_lex, int type){
-    int i;
+    int i = 0;
     while (i < TAILLE_REPRESENTATION - 2){ // Pour faire rentrer chaque champs
+    
         if (representation[i] == -1){
             representation[i] = num_lex;
             representation[++i] = type;
@@ -127,7 +137,6 @@ int inserer_param_fct_proc_rep(int num_lex, int type){
     }
     return 0; // Insertion impossible
 }
-
 
 void afficher_table_rep(){
     int nb_rep=0;

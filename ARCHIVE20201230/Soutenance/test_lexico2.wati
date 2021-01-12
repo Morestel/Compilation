@@ -1,0 +1,60 @@
+wati_programme
+/* Mise en commentaire
+let x : int;
+let aa : char;
+let bb : bool;
+let cc : int;
+let voiture: char;
+*/
+
+// Insertion du même lexeme
+
+let mongolfiere: int;
+let mongolfiere: int;
+let mongolfiere: int;
+let mongolfiere: int;
+let mongolfiere: int;
+let mongolfiere: int;
+let mongolfiere: int;
+let mongolfiere: int;
+let mongolfiere: int;
+let mongolfiere: int;
+let mongolfiere: int;
+
+let mongolfiere: char;
+let mongolfiere: char;
+let mongolfiere: char;
+let mongolfiere: char;
+let mongolfiere: char;
+let mongolfiere: char;
+let mongolfiere: char;
+let mongolfiere: char;
+let mongolfiere: char;
+let mongolfiere: char;
+let mongolfiere: char;
+
+let mongolfiere: bool;
+
+let tel: int;
+let tel: int;
+let tel: int;
+let tel: int;
+let tel: int;
+let tel: int;
+let tel: int;
+let tel: int;
+
+let tel: char;
+let tel: char;
+let tel: char;
+let tel: char;
+let tel: char;
+let tel: char;
+let tel: char;
+
+
+
+
+{
+  mongolfiere = 3;  
+}

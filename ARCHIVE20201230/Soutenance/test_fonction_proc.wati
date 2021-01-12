@@ -1,0 +1,19 @@
+wati_programme
+
+
+fct soutenance() return int{
+        x++;
+    }
+
+
+fct chien(float y, float x, char z) return float{
+        x++;
+    }
+
+procedure chat(int v){
+    x++;
+}
+
+{
+  x++;  
+}

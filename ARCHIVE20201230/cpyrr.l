@@ -54,8 +54,8 @@ switch {return(SWITCH);}
 case {return(CASE);}
 default {return(DEFAULT);}
 
-0|[1-9][0-9]* {return(CST_ENTIERE);}
-0|[1-9][0-9]*\.[0-9]+ {return(CST_REEL);}
+0|[1-9][0-9]* {yylval.entier = atoi(yytext); return(CST_ENTIERE);}
+0|[1-9][0-9]*\.[0-9]+ {yylval.entier = atoi(yytext); return(CST_REEL);}
 \'[a-zA-Z]\' {return(CST_CARACTERE);}
 \"[^\"\n]+\" {return(CST_CHAINE);}
 

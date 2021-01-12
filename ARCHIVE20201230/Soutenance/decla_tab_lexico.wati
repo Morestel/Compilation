@@ -1,0 +1,15 @@
+wati_programme
+
+let vert[5]: int;
+let rouge[100000]: char;
+let x: int;
+let jaune[x]: int;
+
+{
+    lit = 5;
+    vert[0] = 12;
+    vert[1] = 2;
+    vert[2] = 142;
+    vert[3] = 89;
+
+}

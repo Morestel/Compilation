@@ -1,0 +1,19 @@
+wati_programme
+
+let noir: int;
+let couleur: char;
+let martin: int;
+let matin: char;
+let lecture: int;
+let lit: int;
+let couverture: bool;
+let reel: float;
+let entire: int;
+let choix: bool;
+let caractere: char;
+let brig: int;
+let x: int;
+
+{
+    lit = 5;
+}

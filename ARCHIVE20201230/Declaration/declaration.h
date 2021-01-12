@@ -53,4 +53,5 @@ int declaration_fonction(int numero, int type, int numero_region, int indice_rep
 int gerer_debordement(int numero);
 // Affichage table déclaration
 void afficheDeclaration();
+void afficheDebordement();
 #endif

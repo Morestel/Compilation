@@ -100,8 +100,8 @@ corps: {deplacement = 0;} liste_declarations liste_instructions
      | liste_instructions 
 ;
 
-liste_declarations: declaration POINT_VIRGULE
-                  | liste_declarations declaration POINT_VIRGULE
+liste_declarations: declaration 
+                  | liste_declarations declaration 
 ;
 
 liste_instructions: ACCOLADE_OUVRANTE suite_liste_inst ACCOLADE_FERMANTE
@@ -111,8 +111,8 @@ suite_liste_inst: instruction
                 | suite_liste_inst instruction
 ;
 
-declaration: declaration_type
-           | declaration_variable
+declaration: declaration_type POINT_VIRGULE
+           | declaration_variable POINT_VIRGULE
            | declaration_procedure
            | declaration_fonction
 ;
@@ -124,8 +124,8 @@ declaration: declaration_type
 declaration_type: TYPE STRUCT IDF {deplacement = 0; nombre_champs = 0; numero = $3; nombre_dimensions = 0;} suite_declaration_type
 ;
 
-suite_declaration_type: ACCOLADE_OUVRANTE liste_champs ACCOLADE_FERMANTE {inserer_structure_table_representation(nombre_champs); declaration_structure(numero, $2, num_region, indice_representation); indice_representation += 1 + (nombre_champs*3);}  
-                      | TABLEAU dimension DE nom_type {inserer_tableau_table_representation($4, nombre_dimensions); declaration_tableau(numero, $4, nombre_dimensions, num_region, indice_representation); indice_representation += 1 + 1 + (nombre_dimensions * 2);}
+suite_declaration_type: ACCOLADE_OUVRANTE {inserer_structure_table_representation(nombre_champs);} liste_champs ACCOLADE_FERMANTE {update_structure_rep(nombre_champs); declaration_structure(numero, $3, num_region, indice_representation); indice_representation += 1 + (nombre_champs*3);}  
+                      | TABLEAU {laisser_espace_tab(2);} dimension DE nom_type {inserer_tableau_table_representation($5, nombre_dimensions); declaration_tableau(numero, $5, nombre_dimensions, num_region, indice_representation); indice_representation += 1 + 1 + (nombre_dimensions * 2);}
 ; /* Normalement le nombre de champ est compté dans liste champs, on récupère juste la valeur qu'on insère dans la première case de
 la structure dans la table des représentations */
 /* Idem pour les tableaux dimension contient le nombre de dimensions du tableau 
@@ -152,32 +152,32 @@ nom_type: type_simple {$$ = $1;}
 ;
 
 /* Type de base */
-type_simple: ENTIER {$$ = 1;}
-           | REEL {$$ = 2;}
-           | BOOLEEN {$$ = 3;}
-           | CARACTERE {$$ = 4;}
+type_simple: ENTIER {$$ = 0;}
+           | REEL {$$ = 1;}
+           | BOOLEEN {$$ = 2;}
+           | CARACTERE {$$ = 3;}
            | CHAINE CROCHET_OUVRANT CST_ENTIERE CROCHET_FERMANT {$$ = $3;}
 ;
 
 /* Declaration */
-declaration_variable: VARIABLE IDF DEUX_POINTS nom_type {declaration_variable($2, $4, deplacement, num_region); deplacement += taille($4); printf("Variable: %d\n", $4);}
+declaration_variable: VARIABLE IDF DEUX_POINTS nom_type {declaration_variable($2, $4, deplacement, num_region); deplacement += taille($4);}
                     | VARIABLE IDF dimension DEUX_POINTS nom_type {declaration_variable($2, $5, deplacement, num_region); deplacement+= taille($5*$2);}
 ;
 
-declaration_procedure: PROCEDURE {empiler(pile_region, num_region); num_region++; NIS++; deplacement = 1 + NIS; } IDF liste_parametres corps 
+declaration_procedure: PROCEDURE {empiler(pile_region, num_region); num_region++; NIS++; deplacement = 1 + NIS; nombre_parametre = 0; laisser_espace_tab(1);} IDF liste_parametres corps 
 {ajoutRegion(deplacement, NIS, NULL); 
 NIS--; 
 inserer_fonction_procedure_rep(-1, nombre_parametre);
 declaration_procedure($3, -1, num_region, indice_representation);
-indice_representation += 1 + (nombre_parametre * 2);} /* Le paramètre possède 2 champs + 1 champ pour le nb de param*/
+indice_representation += 1 + (nombre_parametre * 2); printf("Indice représentation procédure: %d\n", indice_representation); printf("Nombre paramètres: %d\n", nombre_parametre);} /* Le paramètre possède 2 champs + 1 champ pour le nb de param*/
 ;
 
-declaration_fonction: FONCTION {empiler(pile_region, num_region); num_region++; NIS++; deplacement = 1 + NIS;} IDF liste_parametres RETOURNE type_simple corps 
+declaration_fonction: FONCTION {empiler(pile_region, num_region); num_region++; NIS++; deplacement = 1 + NIS; nombre_parametre = 0; laisser_espace_tab(2);} IDF liste_parametres RETOURNE type_simple corps 
 {ajoutRegion(deplacement, num_region, NULL); 
 NIS--; 
 inserer_fonction_procedure_rep($6, nombre_parametre);
 declaration_fonction($3, $6, num_region, indice_representation);
-indice_representation += 1 + 1 + (nombre_parametre * 2);} /* Type résultat + Nb_param + Champ_param*/
+indice_representation += 1 + 1 + (nombre_parametre * 2); printf("Indice représentation: %d\n", indice_representation);printf("Nombre paramètres: %d\n", nombre_parametre);} /* Type résultat + Nb_param + Champ_param*/
 ;
 
 liste_parametres: PARENTHESE_OUVRANTE PARENTHESE_FERMANTE 
@@ -337,8 +337,8 @@ suite_ecriture: VIRGULE variable suite_ecriture
 ;
 
 %%
-int main(void){
-
+int main(){
+    
     // Déclaration / Initialisation Tables
     initialise(); 
     creer_representation(); 
@@ -351,14 +351,16 @@ int main(void){
     afficheLexico();
     printf("\n");
     afficher_table_rep();
-    printf("\n");
+    printf("\n");/*
     affiche_region();
     printf("\n");
-    afficheDeclaration();
+    */afficheDeclaration();
+    afficheDebordement();
     printf("Il y a: %d lignes\n", num_ligne);
     printf("Il y a: %d commentaires\n", nb_commentaire);
     printf("Indice représentation : %d\n", indice_representation);
+
     free(pile_region);
-    return 0;
+    exit(EXIT_SUCCESS);
    
 }
